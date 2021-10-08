@@ -6,6 +6,7 @@ const process = require('process')
 const { Command } = require('commander')
 const program = new Command()
 const path = require('path')
+const download = require('download-git-repo')
 
 // 引入模版文件
 const templates = require('../templates/index')
@@ -81,8 +82,18 @@ program
 program
 	.command('create <projectName>')
 	.description('创建一个项目')
-	.action((projectName) => {
-		console.log(projectName)
+	.action(async (projectName) => {
+		download('direct:git@e.coding.net:wudian/wiki/admin-template.git', `${process.cwd()}/${projectName}`, { clone: true }, function(err) {
+			if (err) {
+				console.log(err)
+			}
+			fs.unlink(`${process.cwd()}/${projectName}/.git`, function(err) {
+				if (err) {
+					console.log(err)
+				}
+			})
+			console.log(`${projectName} 创建成功`)
+		})
 	})
 
 program.parse(process.argv)
