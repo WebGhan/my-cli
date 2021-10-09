@@ -1,7 +1,7 @@
 ## 安装
 
 ```
-npm install -g
+npm install -g @gaohan1224/mycli
 ```
 
 ## 使用
